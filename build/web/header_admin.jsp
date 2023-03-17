@@ -12,39 +12,12 @@
         <section id="header">
             <a href="#"><img src="img/logo.png" alt="" class="logo" /></a>
             <div>
-                <!-- !Search bar -->
-                <form action="MainController" method="get">
-                    <div class="wrapper" style="display: none">
-                        <div class="search_box">
-                            <div class="dropdown">
-                                <input type="hidden" name="searchby" />
-                                <div id="selectText" class="default_option" onclick="toggleDropdown()">SEARCH BY</div>
-                                <ul class="dropdown-menu">
-                                    <li class="options" onclick="selectOption('byname')">By Name</li>
-                                    <li class="options" onclick="selectOption('bycategory')">By Category</li>
-                                </ul>
-                            </div>
-                            <div class="search_field">
-                                   <input type="text" class="input" id="inputfield" placeholder="Search" name="txtsearch" value="<%=(request.getParameter("keyword")
-                                           != null) ? request.getParameter("keyword") : ""%>" />
-                                <input type="submit" value="find" name="action" style="display: none" />
-                                <i class="fas fa-search"></i>
-                            </div>
-                        </div>
-                    </div>
-                </form>
                 <!-- ! Navbar -->
                 <ul id="navbar">
                     <li><a class="active" href="index.jsp">Test Shop</a></li>
                     <li><a href="">Manage Orders</a></li>
                     <li><a href="">Manage Plants</a></li>
                     <li><a href="">Manage Categories</a></li>                                       
-                    <li>
-                        <a href="#"><i class="far fa-search search_icon" style="font-size: 18px"></i></a>
-                    </li>
-                    <li>
-                        <a href="MainController?action=viewdetailcart"><i class="far fa-shopping-bag" style="font-size: 18px"></i></a>
-                    </li>
                     <li>
                         <a href="#"><i class="fas fa-user-circle" onclick="menuToggle();" style="font-size: 25px"></i></a>
                     </li>

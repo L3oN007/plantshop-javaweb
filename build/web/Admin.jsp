@@ -59,44 +59,30 @@
             </section>
 
             <section id="cart" class="section-p1">
+                <input >
                 <table width="100%">
                     <thead>
                         <tr>
-                            <td>Order ID</td>
-                            <td>Order Date</td>
-                            <td>Ship Date</td>
-                            <td>Order's Status</td>
-                            <td>View</td>
+                            <td>Acc ID</td>
+                            <td>Email</td>
+                            <td>Password</td>
+                            <td>Full Name</td>
+                            <td>Phone Number</td>
                             <td>Option</td>
                         </tr>
                     </thead>
 
                     <tbody>
-                        <c:forEach items="${OrderDAO.getOrderByStatus(sessionScope.account.accID,2)}" var="o">
+                        <c:forEach items="${AccountDAO.getAllAccounts()}" var="a">
                             <tr>
-                                <td>${o.orderID}</td>
-                                <td>${o.ordDate}</td>
-                                <td>${o.shipdate}</td>
-                                <c:if test="${o.status == 3}">
-                                    <td><p class="status cancelled">Cancelled</p></td>
-                                </c:if>
-                                <c:if test="${o.status == 1}">
-                                    <td><p class="status pending">Pending</p></td>
-                                </c:if>
-                                <c:if test="${o.status == 2}">
-                                    <td><p class="status delivered">Delivered</p></td>
-                                </c:if>
-                                <td><a href="OrderDetail.jsp?orderID=${o.orderID}">Detail</a></td>
-                                <c:if test="${o.status == 1}">
-                                    <td>
-                                        <button type="submit" value="remove" name="action"><i class="fal fa-minus-circle"></i></button>
-                                    </td>
-                                </c:if>
-                                <c:if test="${o.status == 3 || o.status == 2 }">
+                                <td>${a.accID}</td>
+                                <td>${a.email}</td>
+                                <td>${a.password}</td>
+                                <td>${a.fullname}</td>
+                                <td>${a.phone}</td>                                                            
                                     <td>
                                         <button type="submit" value="remove" name="action"><i class="fas fa-redo-alt rebuy"></i></button>
                                     </td>
-                                </c:if>
                             </tr>
                         </c:forEach>
                     </tbody>

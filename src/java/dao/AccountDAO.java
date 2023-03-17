@@ -102,7 +102,7 @@ public class AccountDAO {
         return acc;
     }
 
-    public static ArrayList<Account> getAccounts() {
+    public static ArrayList<Account> getAllAccounts() {
         ArrayList<Account> accounts = new ArrayList<>();
         Connection cn = null;
         try {
