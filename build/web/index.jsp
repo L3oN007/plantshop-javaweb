@@ -48,8 +48,8 @@
 
             <section id="hero">
                 <h4>Flower shop</h4>
-                <h2>Supernorwe badgwg</h2>
-                <h1>on all product</h1>
+                <h2>"Bringing nature's beauty</h2>
+                <h1>to your doorstep."</h1>
                 <p>Save more with coupons & up to 70% off</p>
                 <button>Shop Now</button>
             </section>
@@ -110,8 +110,8 @@
             </section>
 
             <section id="banner" class="section-m1">
-                <h4>Repair Services</h4>
-                <h2>Up to <span> 70% Off</span> All T-Shirt & Accessories</h2>
+                <h4>Sale Season</h4>
+                <h2>Up to <span> 70% Off</span> All Plant & Flower</h2>
                 <button class="normal">Explore More</button>
             </section>
 

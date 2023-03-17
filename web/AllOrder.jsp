@@ -17,7 +17,7 @@
             <c:import url="header_user.jsp" />
 
             <section id="page-header">
-                <h2>#Cart</h2>
+                <h2>#All Order</h2>
                 <p>Save more with coupons & up to 70% off</p>
             </section>
             <c:set value="${OrderDAO.getAllOrder(sessionScope.account.accID)}" var="check"/>
