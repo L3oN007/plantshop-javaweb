@@ -60,7 +60,8 @@
                                     </c:if>
                                     <c:if test="${o.status == 3 || o.status == 2 }">                                       
                                         <td>
-                                            <button type="submit" value="remove" name="action"><i class="fas fa-redo-alt rebuy"></i></button>
+                                            <input type="hidden" value="${o.orderID}" name="orderID"/>
+                                            <button type="submit" value="reorder" name="action"><i class="fas fa-redo-alt rebuy"></i></button>
                                         </td>                                        
                                     </c:if>
                                 </tr>

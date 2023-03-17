@@ -58,6 +58,9 @@ public class MainController extends HttpServlet {
                 case "cancelorder":
                     url = "CancelOrderServlet";
                     break;
+                case "reorder":
+                    url = "ReOrderServlet";
+                    break;
             }
             request.getRequestDispatcher(url).forward(request, response);
         }

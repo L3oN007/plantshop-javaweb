@@ -214,4 +214,51 @@ public class OrderDAO {
         return false;
     }
 
+    /////////////////////
+    public static boolean reOrder(int orderID) throws Exception {
+        Connection cn = null;
+        boolean result = false;
+        cn = DBUtils.makeConnection();
+        if (cn != null) {
+            int newOrderId = 0;
+            cn.setAutoCommit(false);
+            // Query to add new Orders row with old data
+            String sql = "INSERT INTO Orders(OrdDate,status,AccID)\n"
+                    + "SELECT ?,1,AccID\n"
+                    + "FROM Orders\n"
+                    + "WHERE OrderID=?";
+            Date currentDate = new Date(System.currentTimeMillis());
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setDate(1, currentDate);
+            pst.setInt(2, orderID);
+            pst.executeUpdate();
+
+            // Query to get new created OrderID
+            sql = "SELECT TOP 1 OrderID\n"
+                    + "FROM Orders\n"
+                    + "ORDER BY OrderID DESC";
+            pst = cn.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+            if (rs != null && rs.next()) {
+                newOrderId = rs.getInt("OrderID");
+            }
+
+            // Query to add new OrderDetails with new OrderID
+            sql = "INSERT INTO OrderDetails(OrderID,PID, quantity)\n"
+                    + "SELECT ?, PID, quantity\n"
+                    + "FROM OrderDetails\n"
+                    + "WHERE OrderID=?";
+            pst = cn.prepareStatement(sql);
+            pst.setInt(1, newOrderId);
+            pst.setInt(2, orderID);
+            pst.executeUpdate();
+
+            cn.commit();
+            cn.setAutoCommit(true);
+            cn.close();
+            return true;
+        }
+        return result;
+    }
+
 }

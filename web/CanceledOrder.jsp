@@ -23,7 +23,7 @@
             <c:import url="header_user.jsp" />
 
             <section id="page-header">
-                <h2>#Cart</h2>
+                <h2>#Canceled Order</h2>
                 <p>Save more with coupons & up to 70% off</p>
             </section>
             <c:set value="${OrderDAO.getOrderByStatus(sessionScope.account.accID,3)}" var="check"/>

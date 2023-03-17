@@ -29,7 +29,7 @@
                 <c:if test="${not empty listplants}">
                     <c:forEach items="${listplants}" var="p">
                         <div class="pro" onclick="window.location.href = 'MainController?action=sproduct&id=${p.id}'">
-                            <img src="img/products/f1.jpg" alt="" />
+                            <img src="${p.imgpath}" alt="" />
                             <div class="des">
                                 <!-- catename -->
                                 <span>${p.catename}</span>

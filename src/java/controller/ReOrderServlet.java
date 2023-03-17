@@ -5,23 +5,21 @@
  */
 package controller;
 
-import static dao.OrderDAO.getOrderDetailsByOrderID;
-import dto.OrderDetail;
+import dao.OrderDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author L3oN
  */
-public class RepurchaseServlet extends HttpServlet {
+public class ReOrderServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,17 +34,15 @@ public class RepurchaseServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-//            HttpSession session = request.getSession();
-//            int orderID = Integer.parseInt(request.getParameter("orderID"));
-//            ArrayList<OrderDetail> orderDetails = getOrderDetailsByOrderID(orderID);
-//            HashMap<String, Integer> cart = (HashMap<String, Integer>) session.getAttribute("cart");
-//
-//            for (OrderDetail orderDetail : orderDetails) {
-//                String pid = String.valueOf(orderDetail.getPlantID());
-//                int quantity = orderDetail.getQuantity();
-//                cart.put(pid, quantity);
-//            }
-
+            /* TODO output your page here. You may use following sample code. */
+            int orderID = Integer.parseInt(request.getParameter("orderID"));
+            boolean done = OrderDAO.reOrder(orderID);
+            if (done) {
+                request.setAttribute("reOrderSuccess", "You have successfully reordered!");
+            }
+            request.getRequestDispatcher("ProcessingOrder.jsp").forward(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(ReOrderServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
