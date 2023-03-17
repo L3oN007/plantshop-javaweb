@@ -47,7 +47,7 @@
             <c:import url="header_user.jsp" />
 
             <section id="hero">
-                <h4>Plant shop</h4>
+                <h4>Flower shop</h4>
                 <h2>Supernorwe badgwg</h2>
                 <h1>on all product</h1>
                 <p>Save more with coupons & up to 70% off</p>

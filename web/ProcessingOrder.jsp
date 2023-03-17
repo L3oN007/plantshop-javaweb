@@ -23,7 +23,7 @@
             <c:import url="header_user.jsp" />
 
             <section id="page-header">
-                <h2>#Cart</h2>
+                <h2>#Processing Order</h2>
                 <p>Save more with coupons & up to 70% off</p>
             </section>
             <c:set value="${OrderDAO.getOrderByStatus(sessionScope.account.accID,1)}" var="check"/>
@@ -43,6 +43,7 @@
 
                         <tbody>
                             <c:forEach items="${OrderDAO.getOrderByStatus(sessionScope.account.accID,1)}" var="o">
+                            <form action="MainController" method="post">
                                 <tr>
                                     <td>${o.orderID}</td>
                                     <td>${o.ordDate}</td>
@@ -59,11 +60,13 @@
                                     <td><a href="OrderDetail.jsp?orderID=${o.orderID}">Detail</a></td>
                                     <c:if test="${o.status == 1}">
                                         <td>
-                                            <button type="submit" value="remove" name="action"><i class="fal fa-minus-circle"></i></button>
+                                            <input type="hidden" value="${o.orderID}" name="orderID"/>
+                                            <button type="submit" value="cancelorder" name="action"><i class="fal fa-minus-circle"></i></button>
                                         </td>
                                     </c:if>
                                 </tr>
-                            </c:forEach>
+                            </form>
+                        </c:forEach>
                         </tbody>
                     </table>
                 </section>

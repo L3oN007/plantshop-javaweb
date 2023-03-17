@@ -43,6 +43,7 @@
 
                         <tbody>
                             <c:forEach items="${OrderDAO.getOrderByStatus(sessionScope.account.accID,3)}" var="o">
+                            <form action="MainController" method="post">
                                 <tr>
                                     <td>${o.orderID}</td>
                                     <td>${o.ordDate}</td>
@@ -59,11 +60,13 @@
                                     <td><a href="OrderDetail.jsp?orderID=${o.orderID}">Detail</a></td>
                                     <c:if test="${o.status == 3 || o.status == 2 }">
                                         <td>
-                                            <button type="submit" value="remove" name="action"><i class="fas fa-redo-alt rebuy"></i></button>
+                                            <input type="hidden" value="${o.orderID}" name="orderID"/>
+                                            <button type="submit" value="reorder" name="action"><i class="fas fa-redo-alt rebuy"></i></button>
                                         </td>
                                     </c:if>
                                 </tr>
-                            </c:forEach>
+                            </form>
+                        </c:forEach>
                         </tbody>
                     </table>
                 </section>
