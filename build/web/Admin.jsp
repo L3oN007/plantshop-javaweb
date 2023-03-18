@@ -71,13 +71,13 @@
                             <td>Password</td>
                             <td>Full Name</td>
                             <td>Phone Number</td>
-                            <td>Option</td>
+                            <td>Status</td>
                             <td>Option</td>
                         </tr>
                     </thead>
 
                     <tbody>                                              
-                    <c:forEach items="${AccountDAO.getAllAccounts()}" var="a">
+                    <c:forEach items="${empty requestScope.accountList ? AccountDAO.getAllAccounts() : requestScope.accountList}" var="a">
                         <form action="MainController" method="post">
                             <tr>
                                 <td>${a.accID}</td>

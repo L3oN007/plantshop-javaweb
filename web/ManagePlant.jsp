@@ -60,49 +60,49 @@
             <section id="cart" class="section-p1">               
                 <form class="search-container" action="MainController" method="post">
                     <input type="text" id="search-bar" placeholder="Enter email or fullname" name="txtsearch" value="${param.txtsearch}" />
-                    <input type="submit" value="searchacc" name="action" style="display: none">
+                    <input type="submit" value="search" name="action" style="display: none">
                     <a href="#"><img class="search-icon" src="http://www.endlessicons.com/wp-content/uploads/2012/12/search-icon.png" /></a>
                 </form>
                 <table width="100%">
                     <thead>
                         <tr>
-                            <td>Acc ID</td>
-                            <td>Email</td>
-                            <td>Password</td>
-                            <td>Full Name</td>
-                            <td>Phone Number</td>
+                            <td>PID</td>
+                            <td>Img</td>
+                            <td>Plant Name</td>
+                            <td>Description</td>
+                            <td>Price</td>
                             <td>Status</td>
+                            <td>Cate id</td>
+                            <td>Cate name</td>
                             <td>Option</td>
                         </tr>
                     </thead>
 
                     <tbody>                                              
-                    <c:forEach items="${empty requestScope.accountList ? AccountDAO.getAllAccounts() : requestScope.accountList}" var="a">
+                        <c:forEach items="${empty requestScope.listplants ? PlantDAO.getAllPlants() : requestScope.listplants}" var="p">
                         <form action="MainController" method="post">
                             <tr>
-                                <td>${a.accID}</td>
-                                <td>${a.email}</td>
-                                <td>${a.password}</td>
-                                <td>${a.fullname}</td>
-                                <td>${a.phone}</td>
-                                <c:if test="${a.status == 1}">
-                                    <td><p class="status delivered">Available</p></td>
-                                </c:if>
-                                <c:if test="${a.status == 0}">
-                                    <td><p class="status cancelled">Ban</p></td>
-                                </c:if>
-                                <c:if test="${a.role == 0}">
-                                    <td>
-                                        <input type="hidden" value="${a.email}" name="email"/>
-                                        <input type="hidden" value="${a.status}" name="status"/>
-                                        <c:if test="${a.status == 1}">
-                                            <button type="submit" value="banacc" name="action">Ban</button>
-                                        </c:if>
-                                        <c:if test="${a.status == 0}">
-                                            <button type="submit" value="banacc" name="action">Unban</button>
-                                        </c:if>
-                                    </td>
-                                </c:if>
+                                <td>${p.id}</td>
+                                <td><img src="${p.imgpath}"/></td>
+                                <td>${p.name}</td>
+                                <td><a href="">Detail</a></td>
+                                <td>$${p.price}</td>
+                                <td>
+                                    <c:if test="${p.status == 1}">
+                                        <p class="status delivered">Available</p>
+                                    </c:if>
+                                    <c:if test="${p.status == 0}">
+                                        <p class="status cancelled">Out of </p>
+                                    </c:if>
+                                </td>
+                                <td>${p.cateid}</td>
+                                <td>${p.catename}</td>
+                                <td>
+                                    <button><i class="fas fa-store-alt-slash"></i></button>
+                                    <!--<button><i class="fas fa-store-alt-slash"></i></button>-->
+                                </td>
+
+
                             </tr>
                         </form>
                     </c:forEach>
@@ -132,12 +132,7 @@
 
                 #hero h2 {
                     color: #fff;
-                }
-
-                #cart table td:nth-child(1) {
-                    width: 100px;
-                    text-align: center;
-                }
+                }   
 
                 #cart table td:nth-child(2) {
                     width: 150px;
@@ -148,12 +143,22 @@
                     width: 150px;
                     text-align: center;
                 }
-
-                #cart table td:nth-child(4),
-                #cart table td:nth-child(5),
-                #cart table td:nth-child(6),
-                #cart table td:nth-child(7){
+                #cart table td:nth-child(4) {
+                    width: 100px;
+                    text-align: center;
+                }
+                #cart table td:nth-child(5) {
                     width: 150px;
+                    text-align: center;
+                }
+
+
+                #cart table td:nth-child(6),
+                #cart table td:nth-child(7),
+                #cart table td:nth-child(1),
+                #cart table td:nth-child(8),
+                #cart table td:nth-child(9){
+                    width: 100px;
                     text-align: center;
                 }
 

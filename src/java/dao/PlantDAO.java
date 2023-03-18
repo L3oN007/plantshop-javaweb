@@ -28,9 +28,47 @@ public class PlantDAO {
                 String sql = "select [PID],[PName],[price],[imgPath],[description],[status],[Plants].[CateID] as 'CateID',[Categories].[CateName]\n"
                         + "from [dbo].[Plants] join [dbo].[Categories] on [Plants].[CateID] = [Categories].[CateID]";
                 if (searchby == null || searchby.equalsIgnoreCase("by name")) {
-                    sql = sql + " where Plants.PName like ?";
+                    sql = sql + " where Plants.PName like ? AND Plants.status = 1";
                 } else {
-                    sql = sql + " where CateName like ?";
+                    sql = sql + " where CateName like ? AND Plants.status = 1";
+                }
+                PreparedStatement pst = cn.prepareStatement(sql);
+                pst.setString(1, "%" + keyword + "%");
+                ResultSet rs = pst.executeQuery();
+                if (rs != null) {
+                    while (rs.next()) {
+                        int id = rs.getInt("PID");
+                        String name = rs.getString("PName");
+                        int price = rs.getInt("price");
+                        String imgpath = rs.getString("imgpath");
+                        String description = rs.getString("description");
+                        int status = rs.getInt("status");
+                        int cateid = rs.getInt("CateID");
+                        String catename = rs.getString("CateName");
+                        Plant plant = new Plant(id, name, price, imgpath, description, status, cateid, catename);
+                        list.add(plant);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+        return list;
+    }
+    
+    public static ArrayList<Plant> searchPlant(String keyword, String searchby) {
+        ArrayList<Plant> list = new ArrayList<>();
+        Connection cn = null;
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                String sql = "select [PID],[PName],[price],[imgPath],[description],[status],[Plants].[CateID] as 'CateID',[Categories].[CateName]\n"
+                        + "from [dbo].[Plants] join [dbo].[Categories] on [Plants].[CateID] = [Categories].[CateID]";
+                if (searchby == null || searchby.equalsIgnoreCase("by name")) {
+                    sql = sql + " where Plants.PName like ? AND Plants.status = 1";
+                } else {
+                    sql = sql + " where CateName like ? AND Plants.status = 1";
                 }
                 PreparedStatement pst = cn.prepareStatement(sql);
                 pst.setString(1, "%" + keyword + "%");
@@ -63,8 +101,9 @@ public class PlantDAO {
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
-                String sql = "select [PID],[PName],[price],[imgPath],[description],[status],[Plants].[CateID] as 'CateID',[Categories].[CateName]\n"
-                        + "from [dbo].[Plants] join [dbo].[Categories] on [Plants].[CateID] = [Categories].[CateID]";
+                String sql = "SELECT [PID],[PName],[price],[imgPath],[description],[status],[Plants].[CateID] AS 'CateID',[Categories].[CateName]\n"
+                        + "FROM [dbo].[Plants] JOIN [dbo].[Categories] ON [Plants].[CateID] = [Categories].[CateID]";
+                        
                 PreparedStatement pst = cn.prepareStatement(sql);
                 ResultSet rs = pst.executeQuery();
                 if (rs != null) {
@@ -97,7 +136,7 @@ public class PlantDAO {
             if (cn != null) {
                 String sql = "select [PID],[PName],[price],[imgPath],[description],[status],[Plants].[CateID] as 'CateID',[Categories].[CateName]\n"
                         + "from [dbo].[Plants] join [dbo].[Categories] on [Plants].[CateID] = [Categories].[CateID]"
-                        + " where CateName like ?";
+                        + " where CateName like ? AND Plants.status = 1";
                 PreparedStatement pst = cn.prepareStatement(sql);
                 pst.setString(1, "%" + category + "%");
                 ResultSet rs = pst.executeQuery();

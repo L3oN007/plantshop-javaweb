@@ -64,6 +64,10 @@
         <servlet-name>ManageAccountServlet</servlet-name>
         <servlet-class>controller.ManageAccountServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SearchPlantServlet</servlet-name>
+        <servlet-class>controller.SearchPlantServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -127,6 +131,10 @@
     <servlet-mapping>
         <servlet-name>ManageAccountServlet</servlet-name>
         <url-pattern>/ManageAccountServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchPlantServlet</servlet-name>
+        <url-pattern>/SearchPlantServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -5,8 +5,11 @@
  */
 package controller;
 
+import dao.PlantDAO;
+import dto.Plant;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,9 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author L3oN
+ * @author minhn
  */
-public class MainController extends HttpServlet {
+public class SearchPlantServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,47 +34,17 @@ public class MainController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String ac = request.getParameter("action");
-            String url = "index.jsp";
-            switch (ac) {
-                case "find":
-                    url = "SearchServlet";
-                    break;
-                case "sproduct":
-                    url = "ViewPlantServlet";
-                    break;
-                case "addtocart":
-                    url = "AddToCartServlet";
-                    break;
-                case "viewdetailcart":
-                    url = "CartDetail.jsp";
-                    break;
-                case "update":
-                    url = "UpdateQuantityServlet";
-                    break;
-                case "remove":
-                    url = "RemovePlantServlet";//bo car khoi gio hang
-                    break;
-                case "checkout":
-                    url = "CheckOutServlet";
-                    break;
-                case "cancelorder":
-                    url = "CancelOrderServlet";
-                    break;
-                case "reorder":
-                    url = "ReOrderServlet";
-                    break;
-                case "banacc":
-                    url = "UpdateStatusAccountServlet";
-                    break;
-                case "searchacc":
-                    url = "ManageAccountServlet";
-                    break;
-                case "searchplant":
-                    url = "SearchPlantServlet";
-                    break;
+            String keyword = request.getParameter("txtsearch");
+            String searchby = request.getParameter("searchby");
+            if (searchby == null || searchby.trim().isEmpty()) {
+                searchby = "byname";
             }
-            request.getRequestDispatcher(url).forward(request, response);
+            ArrayList<Plant> list = PlantDAO.searchPlant(keyword, searchby);
+            request.setAttribute("listplants", list);
+            request.setAttribute("keyword", keyword);
+            request.getRequestDispatcher("ManagePlant.jsp?keyword" + keyword + "&searchby=" + searchby).forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
