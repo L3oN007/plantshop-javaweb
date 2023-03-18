@@ -41,6 +41,7 @@
                         session.setAttribute("account", account);
                     }
                 }
+                boolean search = false;
             %>
 
             <c:import url="header_admin.jsp" />
@@ -56,8 +57,12 @@
                 <p>Summer Collection New Morden Design</p>
             </section>
 
-            <section id="cart" class="section-p1">
-                <input />
+            <section id="cart" class="section-p1">               
+                <form class="search-container" action="MainController" method="post">
+                    <input type="text" id="search-bar" placeholder="Enter email or fullname" name="txtsearch" value="${param.txtsearch}" />
+                    <input type="submit" value="searchacc" name="action" style="display: none">
+                    <a href="#"><img class="search-icon" src="http://www.endlessicons.com/wp-content/uploads/2012/12/search-icon.png" /></a>
+                </form>
                 <table width="100%">
                     <thead>
                         <tr>
@@ -71,8 +76,8 @@
                         </tr>
                     </thead>
 
-                    <tbody>
-                        <c:forEach items="${AccountDAO.getAllAccounts()}" var="a">
+                    <tbody>                                              
+                    <c:forEach items="${AccountDAO.getAllAccounts()}" var="a">
                         <form action="MainController" method="post">
                             <tr>
                                 <td>${a.accID}</td>
@@ -87,21 +92,21 @@
                                     <td><p class="status cancelled">Ban</p></td>
                                 </c:if>
                                 <c:if test="${a.role == 0}">
-                                <td>
-                                    <input type="hidden" value="${a.email}" name="email"/>
-                                    <input type="hidden" value="${a.status}" name="status"/>
-                                    <c:if test="${a.status == 1}">
-                                        <button type="submit" value="banacc" name="action">Ban</button>
-                                    </c:if>
-                                    <c:if test="${a.status == 0}">
-                                        <button type="submit" value="banacc" name="action">Unban</button>
-                                    </c:if>
-                                </td>
+                                    <td>
+                                        <input type="hidden" value="${a.email}" name="email"/>
+                                        <input type="hidden" value="${a.status}" name="status"/>
+                                        <c:if test="${a.status == 1}">
+                                            <button type="submit" value="banacc" name="action">Ban</button>
+                                        </c:if>
+                                        <c:if test="${a.status == 0}">
+                                            <button type="submit" value="banacc" name="action">Unban</button>
+                                        </c:if>
+                                    </td>
                                 </c:if>
                             </tr>
                         </form>
-                        </c:forEach>
-                        </tbody>
+                    </c:forEach>
+                    </tbody>
                 </table>
             </section>
 

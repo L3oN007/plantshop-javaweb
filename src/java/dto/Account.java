@@ -5,6 +5,7 @@ package dto;
  * @author L3oN
  */
 public class Account {
+
     private int accID;
     private String email;
     private String password;
@@ -36,8 +37,6 @@ public class Account {
         this.phone = phone;
         this.role = role;
     }
-    
-    
 
     public int getAccID() {
         return accID;
@@ -102,6 +101,5 @@ public class Account {
     public void setToken(String token) {
         this.token = token;
     }
-    
-    
+
 }

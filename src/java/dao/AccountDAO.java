@@ -442,4 +442,33 @@ public class AccountDAO {
         }
     }
 
+    ///////
+    public static ArrayList<Account> getSearchedAccount(String information) throws Exception {
+        ArrayList<Account> list = new ArrayList<>();
+        Account acc = null;
+        Connection cn = DBUtils.makeConnection();
+        if (cn != null) {
+            String sql = "select accID,email,password,fullname,phone,status,role\n"
+                    + "from Accounts\n"
+                    + "where email LIKE ? or fullname LIKE ?";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, "%" + information + "%");
+            pst.setString(2, "%" + information + "%");
+            ResultSet table = pst.executeQuery();
+            if (table != null && table.next()) {
+                int accID = table.getInt("accID");
+                String email = table.getString("email");
+                String password = table.getString("password");
+                String fullname = table.getString("fullname");
+                String phone = table.getString("phone");
+                int status = table.getInt("status");
+                int role = table.getInt("role");
+                acc = new Account(accID, email, password, fullname, status, phone, role);
+                list.add(acc);
+            }
+            cn.close();
+        }
+        return list;
+    }
+
 }
