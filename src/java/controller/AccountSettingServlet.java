@@ -5,6 +5,7 @@
  */
 package controller;
 
+import dao.AccountDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -16,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author L3oN
  */
-public class MainController extends HttpServlet {
+public class AccountSettingServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,41 +32,38 @@ public class MainController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String ac = request.getParameter("action");
-            String url = "index.jsp";
-            switch (ac) {
-                case "find":
-                    url = "SearchServlet";
-                    break;
-                case "sproduct":
-                    url = "ViewPlantServlet";
-                    break;
-                case "addtocart":
-                    url = "AddToCartServlet";
-                    break;
-                case "viewdetailcart":
-                    url = "CartDetail.jsp";
-                    break;
-                case "update":
-                    url = "UpdateQuantityServlet";
-                    break;
-                case "remove":
-                    url = "RemovePlantServlet";//bo car khoi gio hang
-                    break;
-                case "checkout":
-                    url = "CheckOutServlet";
-                    break;
-                case "cancelorder":
-                    url = "CancelOrderServlet";
-                    break;
-                case "reorder":
-                    url = "ReOrderServlet";
-                    break;
-                case "banacc":
-                    url = "UpdateStatusAccountServlet";
-                    break;
+            String email = request.getParameter("email");
+            String currentPassword = request.getParameter("currentPassword");
+            String confirmPassword = request.getParameter("confirmPassword");
+            String newPassword = request.getParameter("newPassword");
+            String newFullname = request.getParameter("newFullname");
+            String newPhone = request.getParameter("newPhone");
+
+            // Check if the current password is correct
+            boolean passwordMatch = AccountDAO.checkPassword(email, currentPassword);
+
+            if (!passwordMatch) {
+                // If the current password is incorrect, show an error message
+                request.setAttribute("errorMessage", "Current password is incorrect.");
+                request.getRequestDispatcher("AccountSetting.jsp").forward(request, response);
+                return;
             }
-            request.getRequestDispatcher(url).forward(request, response);
+           
+
+            // If the current password is correct, update the account information
+            boolean updateResult = AccountDAO.updateAccount(email, newPassword, newFullname, newPhone);
+
+            if (updateResult) {
+                // If the update is successful, show a success message
+                request.setAttribute("successMessage", "Account information updated successfully.");
+                request.getRequestDispatcher("AccountSetting.jsp").forward(request, response);
+                return;
+            } else {
+                // If the update fails, show an error message
+                request.setAttribute("errorMessage", "Failed to update account information.");
+                request.getRequestDispatcher("AccountSetting.jsp").forward(request, response);
+                return;
+            }
         }
     }
 

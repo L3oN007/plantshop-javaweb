@@ -29,10 +29,6 @@
         <servlet-class>controller.LoginServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ManageAccountServlet</servlet-name>
-        <servlet-class>controller.ManageAccountServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>CheckOutServlet</servlet-name>
         <servlet-class>controller.CheckOutServlet</servlet-class>
     </servlet>
@@ -51,6 +47,18 @@
     <servlet>
         <servlet-name>ReOrderServlet</servlet-name>
         <servlet-class>controller.ReOrderServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateStatusAccountServlet</servlet-name>
+        <servlet-class>controller.UpdateStatusAccountServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AccountSettingServlet</servlet-name>
+        <servlet-class>controller.AccountSettingServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PasswordSettingServlet</servlet-name>
+        <servlet-class>controller.PasswordSettingServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
@@ -81,10 +89,6 @@
         <url-pattern>/LoginServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ManageAccountServlet</servlet-name>
-        <url-pattern>/ManageAccountServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>CheckOutServlet</servlet-name>
         <url-pattern>/CheckOutServlet</url-pattern>
     </servlet-mapping>
@@ -103,6 +107,18 @@
     <servlet-mapping>
         <servlet-name>ReOrderServlet</servlet-name>
         <url-pattern>/ReOrderServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateStatusAccountServlet</servlet-name>
+        <url-pattern>/UpdateStatusAccountServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccountSettingServlet</servlet-name>
+        <url-pattern>/AccountSettingServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PasswordSettingServlet</servlet-name>
+        <url-pattern>/PasswordSettingServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

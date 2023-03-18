@@ -63,7 +63,7 @@
                     <div class="tab-content p-4 p-md-5" id="v-pills-tabContent">
                         <div class="tab-pane fade show active" id="account" role="tabpanel" aria-labelledby="account-tab">
                             <h3 class="mb-4">Account Settings</h3>
-                            <form action="ManageAccountServlet" method="post">
+                            <form action="AccountSettingServlet" method="post">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -86,7 +86,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Password</label>
-                                            <input name="currentPassword" type="text" class="form-control" />
+                                            <input name="currentPassword" type="password" class="form-control" />
                                             <c:if test = "${not empty requestScope.errorMessage}">
                                                 <label style="color: red">${requestScope.errorMessage}</label>                                                
                                             </c:if>
@@ -100,7 +100,7 @@
                         </div>
                         <div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
                             <h3 class="mb-4">Password Settings</h3>
-                            <form action="ManageAccountServlet" method="post">
+                            <form action="PasswordSettingServlet" method="post">
                                 <div class="row">
                                     <div class="col-md-6" style="display: none;">
                                         <div class="form-group">

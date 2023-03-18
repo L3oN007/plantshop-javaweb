@@ -15,9 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author minhn
+ * @author L3oN
  */
-public class ManageAccountServlet extends HttpServlet {
+public class UpdateStatusAccountServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,47 +33,19 @@ public class ManageAccountServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             String email = request.getParameter("email");
-            String currentPassword = request.getParameter("currentPassword");
-            String confirmPassword = request.getParameter("confirmPassword");
-            String newPassword = request.getParameter("newPassword");
-            String newFullname = request.getParameter("newFullname");
-            String newPhone = request.getParameter("newPhone");
-
-            
-            // Check if the current password is correct
-            boolean passwordMatch = AccountDAO.checkPassword(email, currentPassword);
-
-            if (!passwordMatch) {
-                // If the current password is incorrect, show an error message
-                request.setAttribute("errorMessage", "Current password is incorrect.");
-                request.getRequestDispatcher("AccountSetting.jsp").forward(request, response);
-                return;
-            }
-            
-            if (!newPassword.equals(confirmPassword)) {
-                request.setAttribute("errorConfirmMessage", "New password and confirm password is not match.");
-                request.getRequestDispatcher("AccountSetting.jsp").forward(request, response);
-                return;
-            }
-
-            // If the current password is correct, update the account information
-            boolean updateResult = AccountDAO.updateAccount(email, newPassword, newFullname, newPhone);
-
-            if (updateResult) {
-                // If the update is successful, show a success message
-                request.setAttribute("successMessage", "Account information updated successfully.");
-                request.getRequestDispatcher("AccountSetting.jsp").forward(request, response);
-                return;
+            int status = Integer.parseInt(request.getParameter("status"));
+            if (status == 1) {
+                AccountDAO.updateAccountStatus(email, 0);
             } else {
-                // If the update fails, show an error message
-                request.setAttribute("errorMessage", "Failed to update account information.");
-                request.getRequestDispatcher("AccountSetting.jsp").forward(request, response);
-                return;
+                AccountDAO.updateAccountStatus(email, 1);
             }
+            request.getRequestDispatcher("Admin.jsp").forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
