@@ -3,3 +3,5 @@ dist/
 build/
 /nbproject
 /nbproject/
+*.properties
+nbproject/private/private.xml
