@@ -53,6 +53,8 @@ public class LoginServlet extends HttpServlet {
                 session.setAttribute("account", account);
                 if (account.getRole() == 1) {
                     destinationUrl = ADMIN_URL;
+                    session.setAttribute("admin", account);
+
                 } else {
                     destinationUrl = WELCOME_URL;
                 }

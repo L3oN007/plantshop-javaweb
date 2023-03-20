@@ -454,8 +454,8 @@ public class AccountDAO {
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setString(1, "%" + information + "%");
             pst.setString(2, "%" + information + "%");
-            ResultSet table = pst.executeQuery();
-            if (table != null && table.next()) {
+            ResultSet table = pst.executeQuery();           
+            while (table.next()) {
                 int accID = table.getInt("accID");
                 String email = table.getString("email");
                 String password = table.getString("password");
@@ -466,6 +466,7 @@ public class AccountDAO {
                 acc = new Account(accID, email, password, fullname, status, phone, role);
                 list.add(acc);
             }
+
             cn.close();
         }
         return list;

@@ -56,7 +56,7 @@ public class PlantDAO {
         }
         return list;
     }
-    
+
     public static ArrayList<Plant> searchPlant(String keyword, String searchby) {
         ArrayList<Plant> list = new ArrayList<>();
         Connection cn = null;
@@ -103,7 +103,7 @@ public class PlantDAO {
             if (cn != null) {
                 String sql = "SELECT [PID],[PName],[price],[imgPath],[description],[status],[Plants].[CateID] AS 'CateID',[Categories].[CateName]\n"
                         + "FROM [dbo].[Plants] JOIN [dbo].[Categories] ON [Plants].[CateID] = [Categories].[CateID]";
-                        
+
                 PreparedStatement pst = cn.prepareStatement(sql);
                 ResultSet rs = pst.executeQuery();
                 if (rs != null) {
@@ -185,6 +185,97 @@ public class PlantDAO {
             cn.close();
         }
         return plant;
+    }
+
+    public static boolean updatePlant(int PID, String newName, String newPrice, String newImgPath, String newDescription, String newCateID) {
+        boolean success = false;
+        Connection cn = null;
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                String sql = "UPDATE [dbo].[Plants] SET ";
+                if (newName != null && !newName.trim().isEmpty()) {
+                    sql += "[PName] = ?, ";
+                }
+                if (newPrice != null && !newPrice.trim().isEmpty()) {
+                    sql += "[price] = ?, ";
+                }
+                if (newImgPath != null && !newImgPath.trim().isEmpty()) {
+                    sql += "[imgPath] = ?, ";
+                }
+                if (newDescription != null && !newDescription.trim().isEmpty()) {
+                    sql += "[description] = ?, ";
+                }
+                if (newCateID != null && !newCateID.trim().isEmpty()) {
+                    sql += "[CateID] = ?, ";
+                }
+                sql = sql.replaceAll(", $", " ") + "WHERE [PID] = ?";
+                PreparedStatement pst = cn.prepareStatement(sql);
+                int index = 1;
+                if (newName != null && !newName.trim().isEmpty()) {
+                    pst.setString(index++, newName);
+                }
+                if (newPrice != null && !newPrice.trim().isEmpty()) {
+                    pst.setString(index++, newPrice);
+                }
+                if (newImgPath != null && !newImgPath.trim().isEmpty()) {
+                    pst.setString(index++, newImgPath);
+                }
+                if (newDescription != null && !newDescription.trim().isEmpty()) {
+                    pst.setString(index++, newDescription);
+                }
+                if (newCateID != null && !newCateID.trim().isEmpty()) {
+                    pst.setString(index++, newCateID);
+                }
+                pst.setInt(index++, PID);
+                int rowsAffected = pst.executeUpdate();
+                if (rowsAffected > 0) {
+                    success = true;
+                }
+                cn.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return success;
+    }
+
+    public static boolean updatePlantStatus(int PID, int newStatus) {
+        boolean success = false;
+        Connection cn = null;
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                String sql = "UPDATE [dbo].[Plants] SET [status] = ? WHERE [PID] = ?";
+                PreparedStatement pst = cn.prepareStatement(sql);
+                pst.setInt(1, newStatus);
+                pst.setInt(2, PID);
+                int rowsAffected = pst.executeUpdate();
+                if (rowsAffected > 0) {
+                    success = true;
+                }
+                cn.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return success;
     }
 
 }

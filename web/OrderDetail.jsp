@@ -39,7 +39,7 @@
                 </thead>
 
                 <tbody>                   
-                    <%String orderID = request.getParameter("orderID"); //get orderID%>                                          
+                    <%String orderID = request.getParameter("or //derID"); //get orderID%>                                          
                     <c:if test="${not empty param.orderID}">  
                         <c:set var="total" value="0" />
                         <c:forEach items="${OrderDAO.getOrderByOrderID(param.orderID)}" var="o">

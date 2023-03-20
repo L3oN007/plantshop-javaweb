@@ -68,6 +68,14 @@
         <servlet-name>SearchPlantServlet</servlet-name>
         <servlet-class>controller.SearchPlantServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EditPlantServlet</servlet-name>
+        <servlet-class>controller.EditPlantServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdatePlantStatusServlet</servlet-name>
+        <servlet-class>controller.UpdatePlantStatusServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -135,6 +143,14 @@
     <servlet-mapping>
         <servlet-name>SearchPlantServlet</servlet-name>
         <url-pattern>/SearchPlantServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditPlantServlet</servlet-name>
+        <url-pattern>/EditPlantServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdatePlantStatusServlet</servlet-name>
+        <url-pattern>/UpdatePlantStatusServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

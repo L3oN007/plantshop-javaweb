@@ -43,74 +43,81 @@
                 }
                 boolean search = false;
             %>
+            <c:choose>
+                <c:when test="${sessionScope.admin == null}">                   
+                    <jsp:forward page="login.jsp"/>
+                </c:when>
+                <c:otherwise>
+                    <c:import url="header_admin.jsp" />
 
-            <c:import url="header_admin.jsp" />
+                    <section id="hero">
+                        <h4>Admin Page</h4>
+                        <h2>Hello and welcome back, admin!</h2>
+                        <h1>gggg</h1>
+                    </section>
 
-            <section id="hero">
-                <h4>Admin Page</h4>
-                <h2>Hello and welcome back, admin!</h2>
-                <h1>gggg</h1>
-            </section>
+                    <section id="product1" class="section-p1">
+                        <h2>Plants List</h2>
+                        <p>Summer Collection New Morden Design</p>
+                    </section>
 
-            <section id="product1" class="section-p1">
-                <h2>Accounts List</h2>
-                <p>Summer Collection New Morden Design</p>
-            </section>
-
-            <section id="cart" class="section-p1">               
-                <form class="search-container" action="MainController" method="post">
-                    <input type="text" id="search-bar" placeholder="Enter email or fullname" name="txtsearch" value="${param.txtsearch}" />
-                    <input type="submit" value="search" name="action" style="display: none">
-                    <a href="#"><img class="search-icon" src="http://www.endlessicons.com/wp-content/uploads/2012/12/search-icon.png" /></a>
-                </form>
-                <table width="100%">
-                    <thead>
-                        <tr>
-                            <td>PID</td>
-                            <td>Img</td>
-                            <td>Plant Name</td>
-                            <td>Description</td>
-                            <td>Price</td>
-                            <td>Status</td>
-                            <td>Cate id</td>
-                            <td>Cate name</td>
-                            <td>Option</td>
-                        </tr>
-                    </thead>
-
-                    <tbody>                                              
-                        <c:forEach items="${empty requestScope.listplants ? PlantDAO.getAllPlants() : requestScope.listplants}" var="p">
-                        <form action="MainController" method="post">
-                            <tr>
-                                <td>${p.id}</td>
-                                <td><img src="${p.imgpath}"/></td>
-                                <td>${p.name}</td>
-                                <td><a href="">Detail</a></td>
-                                <td>$${p.price}</td>
-                                <td>
-                                    <c:if test="${p.status == 1}">
-                                        <p class="status delivered">Available</p>
-                                    </c:if>
-                                    <c:if test="${p.status == 0}">
-                                        <p class="status cancelled">Out of </p>
-                                    </c:if>
-                                </td>
-                                <td>${p.cateid}</td>
-                                <td>${p.catename}</td>
-                                <td>
-                                    <button><i class="fas fa-store-alt-slash"></i></button>
-                                    <!--<button><i class="fas fa-store-alt-slash"></i></button>-->
-                                </td>
-
-
-                            </tr>
+                    <section id="cart" class="section-p1">               
+                        <form class="search-container" action="MainController" method="post">
+                            <input type="text" id="search-bar" placeholder="Enter plant name" name="txtsearch" value="${param.txtsearch}" />
+                            <input type="submit" value="search" name="action" style="display: none">
+                            <a href="#"><img class="search-icon" src="http://www.endlessicons.com/wp-content/uploads/2012/12/search-icon.png" /></a>
                         </form>
-                    </c:forEach>
-                    </tbody>
-                </table>
-            </section>
+                        <table width="100%">
+                            <thead>
+                                <tr>
+                                    <td>PID</td>
+                                    <td>Img</td>
+                                    <td>Plant Name</td>
+                                    <td>Description</td>
+                                    <td>Price</td>
+                                    <td>Status</td>
+                                    <td>Cate id</td>
+                                    <td>Cate name</td>
+                                    <td>Option</td>
+                                </tr>
+                            </thead>
 
-            <c:import url="footer.jsp" />
+                            <tbody>                                              
+                                <c:forEach items="${empty requestScope.listplants ? PlantDAO.getAllPlants() : requestScope.listplants}" var="p">
+                                <form action="MainController" method="post">
+                                    <tr>
+                                        <td>${p.id}</td>
+                                        <td><img src="${p.imgpath}"/></td>
+                                        <td>${p.name}</td>
+                                        <td><a href="">Detail</a></td>
+                                        <td>$${p.price}</td>
+                                        <td>
+                                            <c:if test="${p.status == 1}">
+                                                <p class="status delivered">Available</p>
+                                            </c:if>
+                                            <c:if test="${p.status == 0}">
+                                                <p class="status cancelled">Out of stock</p>
+                                            </c:if>
+                                        </td>
+                                        <td>${p.cateid}</td>
+                                        <td>${p.catename}</td>
+                                        <td>
+                                            <input type="hidden" name="PID" value="${p.id}">
+                                            <input type="hidden" name="status" value="${p.status}">
+                                            <button type="submit" value="updateplantstatus" name="action"><i class="fas fa-times"></i></button>
+                                            <a href="EditPlant.jsp?PID=${p.id}"><i class="far fa-edit edit"></i></a>
+                                            <!--<button><i class="fas fa-store-alt-slash"></i></button>-->
+                                        </td>                                
+                                    </tr>
+                                </form>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                    </section>
+
+                    <c:import url="footer.jsp" />
+                </c:otherwise>
+            </c:choose>
             <div id="toast"></div>
             <style>
                 #cart {
@@ -185,8 +192,17 @@
                     padding: 0;
                     font: inherit;
                     cursor: pointer;
-                    outline: inherit;
-                    color: red;
+                    outline: inherit;                  
+                    margin-right: 5px;
+                    font-weight: 20px;
+
+                }
+                tbody td button i.edit:hover {
+                    color: green;
+                }
+
+                a{
+                    color:black;
                 }
 
                 input[type=number]::-webkit-inner-spin-button, 
