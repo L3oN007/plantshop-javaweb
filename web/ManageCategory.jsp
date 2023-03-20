@@ -70,43 +70,21 @@
                         <table width="100%">
                             <thead>
                                 <tr>
-                                    <td>PID</td>
-                                    <td>Img</td>
-                                    <td>Plant Name</td>
-                                    <td>Description</td>
-                                    <td>Price</td>
-                                    <td>Status</td>
-                                    <td>Cate id</td>
-                                    <td>Cate name</td>
+                                    <td>Cate ID</td>
+                                    <td>Cate Name</td>
                                     <td>Option</td>
                                 </tr>
                             </thead>
 
                             <tbody>                                              
-                                <c:forEach items="${empty requestScope.listplants ? PlantDAO.getAllPlants() : requestScope.listplants}" var="p">
+                                <c:forEach items="${empty requestScope.listplants ? PlantDAO.getAllCategory() : requestScope.listplants}" var="p">
                                 <form action="MainController" method="post">
                                     <tr>
-                                        <td>${p.id}</td>
-                                        <td><img src="${p.imgpath}"/></td>
-                                        <td>${p.name}</td>
-                                        <td><a href="">Detail</a></td>
-                                        <td>$${p.price}</td>
-                                        <td>
-                                            <c:if test="${p.status == 1}">
-                                                <p class="status delivered">Available</p>
-                                            </c:if>
-                                            <c:if test="${p.status == 0}">
-                                                <p class="status cancelled">Out of stock</p>
-                                            </c:if>
-                                        </td>
                                         <td>${p.cateid}</td>
-                                        <td>${p.catename}</td>
+                                        <td><input type="text" value="${p.catename}" name="CateName" /></td>
                                         <td>
-                                            <input type="hidden" name="PID" value="${p.id}">
-                                            <input type="hidden" name="status" value="${p.status}">
-                                            <button type="submit" value="updateplantstatus" name="action"><i class="fas fa-times"></i></button>
-                                            <a href="EditPlant.jsp?PID=${p.id}"><i class="far fa-edit edit"></i></a>
-                                            <!--<button><i class="fas fa-store-alt-slash"></i></button>-->
+                                            <input type="hidden" name="CateID" value="${p.cateid}">                                           
+                                            <button type="submit" value="updatecategory" name="action">Update</button>                                            
                                         </td>                                
                                     </tr>
                                 </form>
@@ -120,6 +98,21 @@
             </c:choose>
             <div id="toast"></div>
             <style>
+                input
+                {
+                    margin-bottom: 10px;
+                    border: 1px solid #ccc;
+                    border-radius: 3px;
+                }
+                input:hover
+                {
+                    outline: none;
+                    border: 1px solid #095484;
+                }
+                input {
+                    
+                    padding: 5px;
+                }
                 #cart {
                     padding-top: 0;
                 }
@@ -141,33 +134,20 @@
                     color: #fff;
                 }   
 
+                #cart table td:nth-child(1) {
+                    width: 250px;
+                    text-align: center;
+                }
+
                 #cart table td:nth-child(2) {
-                    width: 150px;
+                    width: 250px;
                     text-align: center;
                 }
-
                 #cart table td:nth-child(3) {
-                    width: 150px;
-                    text-align: center;
-                }
-                #cart table td:nth-child(4) {
-                    width: 100px;
-                    text-align: center;
-                }
-                #cart table td:nth-child(5) {
-                    width: 150px;
+                    width: 250px;
                     text-align: center;
                 }
 
-
-                #cart table td:nth-child(6),
-                #cart table td:nth-child(7),
-                #cart table td:nth-child(1),
-                #cart table td:nth-child(8),
-                #cart table td:nth-child(9){
-                    width: 100px;
-                    text-align: center;
-                }
 
                 .status {
                     padding: 10px 0;
@@ -186,17 +166,24 @@
                 }
 
                 tbody td button {
-                    background: none;
+                    width: 150px;
+                    padding: 10px;
                     border: none;
-                    color: inherit;
-                    padding: 0;
-                    font: inherit;
+                    -webkit-border-radius: 5px;
+                    -moz-border-radius: 5px;
+                    border-radius: 5px;
+                    background-color: #088178;
+                    font-size: 16px;
+                    color: #fff;
                     cursor: pointer;
-                    outline: inherit;                  
-                    margin-right: 5px;
-                    font-weight: 20px;
 
                 }
+
+                tbody td button:hover {
+                    background-color: #088179c7;
+
+                }
+
                 tbody td button i.edit:hover {
                     color: green;
                 }
@@ -205,11 +192,6 @@
                     color:black;
                 }
 
-                input[type=number]::-webkit-inner-spin-button, 
-                input[type=number]::-webkit-outer-spin-button { 
-                    -webkit-appearance: none; 
-                    margin: 0; 
-                }
             </style>
             <script>
                 $(document).ready(function () {

@@ -73,6 +73,9 @@ public class MainController extends HttpServlet {
                 case "updateplantstatus":
                     url = "UpdatePlantStatusServlet";
                     break;
+                case "updatecategory":
+                    url = "UpdateCategoryServlet";
+                    break;
             }
             request.getRequestDispatcher(url).forward(request, response);
         }

@@ -30,6 +30,13 @@ public class Plant {
         this.catename = catename;
     }
 
+    public Plant(int cateid, String catename) {
+        this.cateid = cateid;
+        this.catename = catename;
+    }
+    
+    
+
     public int getId() {
         return id;
     }

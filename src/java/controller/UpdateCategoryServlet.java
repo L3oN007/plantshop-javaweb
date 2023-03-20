@@ -6,10 +6,8 @@
 package controller;
 
 import dao.PlantDAO;
-import dto.Plant;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,9 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author minhn
+ * @author L3oN
  */
-public class SearchPlantServlet extends HttpServlet {
+public class UpdateCategoryServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,12 +32,17 @@ public class SearchPlantServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String PlantName = request.getParameter("txtsearch");           
-            ArrayList<Plant> list = PlantDAO.searchManagePlant(PlantName);
-            request.setAttribute("listplants", list);
-            request.getRequestDispatcher("ManagePlant.jsp").forward(request, response);
-        } catch (Exception e) {
-            e.printStackTrace();
+            /* TODO output your page here. You may use following sample code. */
+            int CateID = Integer.parseInt(request.getParameter("CateID"));
+            String CateName = request.getParameter("CateName");
+            boolean update = PlantDAO.updateCategory(CateID, CateName);
+            if (update == true) {
+                request.setAttribute("update", "Update category name successfully");
+            } else {
+                request.setAttribute("update", "Update category name fail!");
+            }
+            request.getRequestDispatcher("ManageCategory.jsp").forward(request, response);
+
         }
     }
 
