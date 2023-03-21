@@ -18,7 +18,7 @@ import utils.DBUtils;
  * @author minhn
  */
 public class PlantDAO {
-    
+
     public static ArrayList<Plant> getPlants(String keyword, String searchby) {
         ArrayList<Plant> list = new ArrayList<>();
         Connection cn = null;
@@ -52,11 +52,11 @@ public class PlantDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            
+
         }
         return list;
     }
-    
+
     public static ArrayList<Plant> searchManagePlant(String PlantName) {
         ArrayList<Plant> list = new ArrayList<>();
         Connection cn = null;
@@ -86,11 +86,11 @@ public class PlantDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            
+
         }
         return list;
     }
-    
+
     public static ArrayList<Plant> getAllPlants() {
         ArrayList<Plant> list = new ArrayList<>();
         Connection cn = null;
@@ -99,7 +99,7 @@ public class PlantDAO {
             if (cn != null) {
                 String sql = "SELECT [PID],[PName],[price],[imgPath],[description],[status],[Plants].[CateID] AS 'CateID',[Categories].[CateName]\n"
                         + "FROM [dbo].[Plants] JOIN [dbo].[Categories] ON [Plants].[CateID] = [Categories].[CateID]";
-                
+
                 PreparedStatement pst = cn.prepareStatement(sql);
                 ResultSet rs = pst.executeQuery();
                 if (rs != null) {
@@ -119,11 +119,11 @@ public class PlantDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            
+
         }
         return list;
     }
-    
+
     public static ArrayList<Plant> getPlantByCate(String category) {
         ArrayList<Plant> list = new ArrayList<>();
         Connection cn = null;
@@ -156,7 +156,7 @@ public class PlantDAO {
         }
         return list;
     }
-    
+
     public static Plant getPlant(String id) throws Exception {
         Plant plant = null;
         Connection cn = DBUtils.makeConnection();
@@ -182,7 +182,7 @@ public class PlantDAO {
         }
         return plant;
     }
-    
+
     public static boolean updatePlant(int PID, String newName, String newPrice, String newImgPath, String newDescription, String newCateID) {
         boolean success = false;
         Connection cn = null;
@@ -243,7 +243,7 @@ public class PlantDAO {
         }
         return success;
     }
-    
+
     public static boolean updatePlantStatus(int PID, int newStatus) {
         boolean success = false;
         Connection cn = null;
@@ -273,7 +273,7 @@ public class PlantDAO {
         }
         return success;
     }
-    
+
     public static boolean updateCategory(int CateID, String newCateName) {
         boolean success = false;
         Connection cn = null;
@@ -311,7 +311,7 @@ public class PlantDAO {
         }
         return success;
     }
-    
+
     public static ArrayList<Plant> getAllCategory() {
         ArrayList<Plant> list = new ArrayList<>();
         Connection cn = null;
@@ -319,13 +319,13 @@ public class PlantDAO {
             cn = DBUtils.makeConnection();
             if (cn != null) {
                 String sql = "SELECT [CateID],[CateName]\n"
-                        + "  FROM [PlantShop].[dbo].[Categories]";                
+                        + "  FROM [PlantShop].[dbo].[Categories]";
                 PreparedStatement pst = cn.prepareStatement(sql);
                 ResultSet rs = pst.executeQuery();
                 if (rs != null) {
                     while (rs.next()) {
                         int CateID = rs.getInt("CateID");
-                        String CateName = rs.getString("CateName");                        
+                        String CateName = rs.getString("CateName");
                         Plant plant = new Plant(CateID, CateName);
                         list.add(plant);
                     }
@@ -333,9 +333,35 @@ public class PlantDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            
+
         }
         return list;
     }
-    
+
+    public static ArrayList<Plant> searchCategoryByCateName(String CateName) {
+        ArrayList<Plant> result = new ArrayList<>();
+        Connection cn = null;
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                String sql = "SELECT [CateID],[CateName]\n"
+                        + "  FROM [PlantShop].[dbo].[Categories] WHERE [CateName] like ?";
+                PreparedStatement pst = cn.prepareStatement(sql);
+                pst.setString(1, "%" +  CateName + "%" );
+                ResultSet rs = pst.executeQuery();
+                if (rs != null) {
+                    while (rs.next()) {
+                        int CateID = rs.getInt("CateID");
+                        String categoryName = rs.getString("CateName");
+                        Plant plant = new Plant(CateID, categoryName);
+                        result.add(plant);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
 }

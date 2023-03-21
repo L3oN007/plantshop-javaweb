@@ -80,6 +80,10 @@
         <servlet-name>UpdateCategoryServlet</servlet-name>
         <servlet-class>controller.UpdateCategoryServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SearchCategoryServlet</servlet-name>
+        <servlet-class>controller.SearchCategoryServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -159,6 +163,10 @@
     <servlet-mapping>
         <servlet-name>UpdateCategoryServlet</servlet-name>
         <url-pattern>/UpdateCategoryServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchCategoryServlet</servlet-name>
+        <url-pattern>/SearchCategoryServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

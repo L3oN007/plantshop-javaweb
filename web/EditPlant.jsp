@@ -52,6 +52,7 @@
                 align-items: center;
                 height: 100vh;
                 margin-top: 50px;
+                margin-bottom: 120px;
             }
             form {
                 width: 100%;

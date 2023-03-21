@@ -63,8 +63,8 @@
 
                     <section id="cart" class="section-p1">               
                         <form class="search-container" action="MainController" method="post">
-                            <input type="text" id="search-bar" placeholder="Enter plant name" name="txtsearch" value="${param.txtsearch}" />
-                            <input type="submit" value="searchplant" name="action" style="display: none">
+                            <input type="text" id="search-bar" placeholder="Enter category name" name="txtsearch" value="${param.txtsearch}" />
+                            <input type="submit" value="searchcategory" name="action" style="display: none">
                             <a href="#"><img class="search-icon" src="http://www.endlessicons.com/wp-content/uploads/2012/12/search-icon.png" /></a>
                         </form>
                         <table width="100%">
@@ -77,7 +77,7 @@
                             </thead>
 
                             <tbody>                                              
-                                <c:forEach items="${empty requestScope.listplants ? PlantDAO.getAllCategory() : requestScope.listplants}" var="p">
+                                <c:forEach items="${empty requestScope.listCate ? PlantDAO.getAllCategory() : requestScope.listCate}" var="p">
                                 <form action="MainController" method="post">
                                     <tr>
                                         <td>${p.cateid}</td>
