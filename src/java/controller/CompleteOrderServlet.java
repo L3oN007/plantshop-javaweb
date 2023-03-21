@@ -5,18 +5,20 @@
  */
 package controller;
 
+import dao.OrderDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import jdk.internal.org.objectweb.asm.commons.StaticInitMerger;
 
 /**
  *
- * @author L3oN
+ * @author minhn
  */
-public class MainController extends HttpServlet {
+public class CompleteOrderServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,59 +33,12 @@ public class MainController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String ac = request.getParameter("action");
-            String url = "index.jsp";
-            switch (ac) {
-                case "find":
-                    url = "SearchServlet";
-                    break;
-                case "sproduct":
-                    url = "ViewPlantServlet";
-                    break;
-                case "addtocart":
-                    url = "AddToCartServlet";
-                    break;
-                case "viewdetailcart":
-                    url = "CartDetail.jsp";
-                    break;
-                case "update":
-                    url = "UpdateQuantityServlet";
-                    break;
-                case "remove":
-                    url = "RemovePlantServlet";//bo car khoi gio hang
-                    break;
-                case "checkout":
-                    url = "CheckOutServlet";
-                    break;
-                case "cancelorder":
-                    url = "CancelOrderServlet";
-                    break;
-                case "reorder":
-                    url = "ReOrderServlet";
-                    break;
-                case "banacc":
-                    url = "UpdateStatusAccountServlet";
-                    break;
-                case "searchacc":
-                    url = "ManageAccountServlet";
-                    break;
-                case "searchplant":
-                    url = "SearchPlantServlet";
-                    break;
-                case "updateplantstatus":
-                    url = "UpdatePlantStatusServlet";
-                    break;
-                case "updatecategory":
-                    url = "UpdateCategoryServlet";
-                    break;
-                case "searchcategory":
-                    url = "SearchCategoryServlet";
-                    break;
-                case "completeorder":
-                    url = "CompleteOrderServlet";
-                    break;
-            }
-            request.getRequestDispatcher(url).forward(request, response);
+            /* TODO output your page here. You may use following sample code. */
+            int orderID = Integer.parseInt(request.getParameter("orderID"));
+            OrderDAO.completeOrder(orderID);
+            request.getRequestDispatcher("ManageOrder.jsp").forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

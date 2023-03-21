@@ -214,6 +214,33 @@ public class OrderDAO {
         return false;
     }
 
+    public static boolean completeOrder(int orderID) {
+        Connection cn = null;
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                String sql = "UPDATE [dbo].[Orders] SET [status] = 2 WHERE [OrderID] = ?";
+                PreparedStatement pst = cn.prepareStatement(sql);
+                pst.setInt(1, orderID);
+                int rowsUpdated = pst.executeUpdate();
+                if (rowsUpdated > 0) {
+                    return true;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return false;
+    }
+
     /////////////////////
     public static boolean reOrder(int orderID) throws Exception {
         Connection cn = null;
@@ -259,6 +286,28 @@ public class OrderDAO {
             return true;
         }
         return result;
+    }
+
+    public static ArrayList<Order> getAllOrder() throws Exception {
+        ArrayList<Order> orders = new ArrayList<>();
+        Connection cn = DBUtils.makeConnection();
+        if (cn != null) {
+            String sql = "SELECT [OrderID], [OrdDate], [shipdate], [status], [AccID] "
+                    + "FROM [PlantShop].[dbo].[Orders]";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+            while (rs != null && rs.next()) {
+                int orderID = rs.getInt("OrderID");
+                Date ordDate = rs.getDate("OrdDate");
+                Date shipDate = rs.getDate("shipdate");
+                int status = rs.getInt("status");
+                int accID = rs.getInt("AccID");
+                Order order = new Order(orderID, ordDate, shipDate, status, accID);
+                orders.add(order);
+            }
+            cn.close();
+        }
+        return orders;
     }
 
 }

@@ -16,7 +16,7 @@
                 <ul id="navbar">
                     <li><a class="active" href="index.jsp">Test Shop</a></li>
                     <li><a href="Admin.jsp">Manage Accounts</a></li>
-                    <li><a href="">Manage Orders</a></li>
+                    <li><a href="ManageOrder.jsp">Manage Orders</a></li>
                     <li><a href="ManagePlant.jsp">Manage Plants</a></li>
                     <li><a href="ManageCategory.jsp">Manage Categories</a></li>                                       
                     <li>

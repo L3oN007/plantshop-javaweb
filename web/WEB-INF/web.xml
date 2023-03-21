@@ -84,6 +84,10 @@
         <servlet-name>SearchCategoryServlet</servlet-name>
         <servlet-class>controller.SearchCategoryServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CompleteOrderServlet</servlet-name>
+        <servlet-class>controller.CompleteOrderServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -167,6 +171,10 @@
     <servlet-mapping>
         <servlet-name>SearchCategoryServlet</servlet-name>
         <url-pattern>/SearchCategoryServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CompleteOrderServlet</servlet-name>
+        <url-pattern>/CompleteOrderServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
