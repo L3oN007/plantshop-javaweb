@@ -45,13 +45,17 @@
                     <p>Summer Collection New Morden Design</p>
                 </section>
 
-                <section id="cart" class="section-p1">               
-                    <form class="search-container" action="MainController" method="post">
-                        <!--<input type="date" id="search-bar" placeholder="Enter plant name" name="txtsearch" value="${param.txtsearch}" />-->
-                        <input type="text" id="search-bar" placeholder="Enter plant name" name="txtsearch" value="${param.txtsearch}" />
-                        <input type="submit" value="searchplant" name="action" style="display: none">
-                        <a href="#"><img class="search-icon" src="http://www.endlessicons.com/wp-content/uploads/2012/12/search-icon.png" /></a>
+                <section id="search-box">
+                    <form class="search-container" action="MainController" method="post">                       
+                        <input type="number" id="search-bar" placeholder="Enter Account ID" name="txtsearch" value="${param.txtsearch}" />
+                        <input type="submit" value="searchorderbyaccid" name="action" style="display: none">
+                        <c:if test="${requestScope.flag != null}">
+                        <p>Not found what you looking for!</p>
+                        </c:if>
                     </form>
+                </section>
+
+                <section id="cart" class="section-p1">                                   
                     <table width="100%">
                         <thead>
                             <tr>
@@ -65,7 +69,7 @@
                         </thead>
 
                         <tbody>                                              
-                            <c:forEach items="${empty requestScope.listplants ? OrderDAO.getAllOrder() : requestScope.listplants}" var="o">
+                            <c:forEach items="${empty requestScope.listorders ? OrderDAO.getAllOrder() : requestScope.listorders}" var="o">
                             <form action="MainController" method="post">
                                 <tr>
                                     <td>${o.orderID}</td>                                       
@@ -83,10 +87,12 @@
                                         </c:if>
                                     </td>
                                     <td>${o.accID}</td>
-                                    <td>
-                                        <input type="hidden" name="orderID" value="${o.orderID}">                                      
-                                        <button type="submit" value="completeorder" name="action"><i class="fas fa-check-circle check" style="color: #3cd376; font-size: 20px;"></i></button>
-                                    </td>                                
+                                    <c:if test="${o.status == 1}">
+                                        <td>
+                                            <input type="hidden" name="orderID" value="${o.orderID}">                                      
+                                            <button type="submit" value="completeorder" name="action"><i class="fas fa-check-circle check" style="color: #3cd376; font-size: 20px;"></i></button>
+                                        </td>       
+                                    </c:if>
                                 </tr>
                             </form>
                         </c:forEach>
@@ -98,7 +104,15 @@
             </c:otherwise>
         </c:choose>
         <div id="toast"></div>
-        <style>          
+        <style>  
+            #search-box{
+                margin-bottom: 50px;
+            }
+            #search-box p{
+                text-align: center;
+                color: red;
+            }
+
             #cart {
                 padding-top: 0;
             }

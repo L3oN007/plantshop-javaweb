@@ -19,30 +19,7 @@
             <link rel="stylesheet" href="toast.css" />
         </head>
 
-        <body>
-            <%
-// get the token from the cookie
-                Cookie[] cookies = request.getCookies();
-                String token = null;
-                if (cookies != null) {
-                    for (Cookie cookie : cookies) {
-                        if (cookie.getName().equals("token")) {
-                            token = cookie.getValue();
-                            break;
-                        }
-                    }
-                }
-
-// check if the token matches the token in the database
-                if (token != null) {
-                    Account account = AccountDAO.getAccountByToken(token);
-                    if (account != null) {
-                        // set the account in the session
-                        session.setAttribute("account", account);
-                    }
-                }
-                boolean search = false;
-            %>
+        <body>           
             <c:choose>
                 <c:when test="${sessionScope.admin == null}">                   
                     <jsp:forward page="login.jsp"/>
@@ -60,13 +37,18 @@
                         <h2>Plants List</h2>
                         <p>Summer Collection New Morden Design</p>
                     </section>
-
-                    <section id="cart" class="section-p1">               
+                    
+                    <section id="search-box">
                         <form class="search-container" action="MainController" method="post">
                             <input type="text" id="search-bar" placeholder="Enter category name" name="txtsearch" value="${param.txtsearch}" />
                             <input type="submit" value="searchcategory" name="action" style="display: none">
-                            <a href="#"><img class="search-icon" src="http://www.endlessicons.com/wp-content/uploads/2012/12/search-icon.png" /></a>
+                            <c:if test="${requestScope.flag != null}">
+                                <p>Not found what you looking for!</p>
+                            </c:if>
                         </form>
+                    </section>
+
+                    <section id="cart" class="section-p1">                                     
                         <table width="100%">
                             <thead>
                                 <tr>
@@ -98,6 +80,13 @@
             </c:choose>
             <div id="toast"></div>
             <style>
+                #search-box{
+                    margin-bottom: 50px;
+                }
+                #search-box p{
+                    text-align: center;
+                    color: red;
+                }
                 input
                 {
                     margin-bottom: 10px;
@@ -110,7 +99,7 @@
                     border: 1px solid #095484;
                 }
                 input {
-                    
+
                     padding: 5px;
                 }
                 #cart {

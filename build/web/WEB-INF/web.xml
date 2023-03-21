@@ -88,6 +88,10 @@
         <servlet-name>CompleteOrderServlet</servlet-name>
         <servlet-class>controller.CompleteOrderServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SearchOrderByAccIDServlet</servlet-name>
+        <servlet-class>controller.SearchOrderByAccIDServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -175,6 +179,10 @@
     <servlet-mapping>
         <servlet-name>CompleteOrderServlet</servlet-name>
         <url-pattern>/CompleteOrderServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchOrderByAccIDServlet</servlet-name>
+        <url-pattern>/SearchOrderByAccIDServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

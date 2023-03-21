@@ -37,6 +37,9 @@ public class SearchCategoryServlet extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             String CateName = request.getParameter("txtsearch");
             ArrayList<Plant> listCate = PlantDAO.searchCategoryByCateName(CateName);
+            if (listCate.isEmpty()) {
+                request.setAttribute("flag", true);
+            }
             request.setAttribute("listCate", listCate);
             request.getRequestDispatcher("ManageCategory.jsp").forward(request, response);
         } catch (Exception e) {

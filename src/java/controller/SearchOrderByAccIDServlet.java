@@ -5,8 +5,8 @@
  */
 package controller;
 
-import dao.PlantDAO;
-import dto.Plant;
+import dao.OrderDAO;
+import dto.Order;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -17,9 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author minhn
+ * @author L3oN
  */
-public class SearchPlantServlet extends HttpServlet {
+public class SearchOrderByAccIDServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,13 +34,14 @@ public class SearchPlantServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String PlantName = request.getParameter("txtsearch");
-            ArrayList<Plant> list = PlantDAO.searchManagePlant(PlantName);
-            if (list.isEmpty()) {
+            /* TODO output your page here. You may use following sample code. */
+            int accID = Integer.parseInt(request.getParameter("txtsearch"));
+            ArrayList<Order> listorder = OrderDAO.getAllOrder(accID);
+            if(listorder.isEmpty()){
                 request.setAttribute("flag", true);
-            }
-            request.setAttribute("listplants", list);
-            request.getRequestDispatcher("ManagePlant.jsp").forward(request, response);
+            }           
+            request.setAttribute("listorders", listorder);
+            request.getRequestDispatcher("ManageOrder.jsp").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
         }

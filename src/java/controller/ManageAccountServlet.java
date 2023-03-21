@@ -35,17 +35,12 @@ public class ManageAccountServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             String information = request.getParameter("txtsearch");
-            if (information.equals("") || information.isEmpty()) {
-                ArrayList<Account> list = AccountDAO.getAllAccounts();
-                request.setAttribute("accountList", list);
-                request.setAttribute("search", true);
-                request.getRequestDispatcher("Admin.jsp").forward(request, response);
-            } else {
-                ArrayList<Account> list = AccountDAO.getSearchedAccount(information);
-                request.setAttribute("accountList", list);
-                request.setAttribute("search", true);
-                request.getRequestDispatcher("Admin.jsp").forward(request, response);
+            ArrayList<Account> list = AccountDAO.getSearchedAccount(information);
+            if (list.isEmpty()) {
+                request.setAttribute("flag", true);
             }
+            request.setAttribute("accountList", list);
+            request.getRequestDispatcher("Admin.jsp").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
         }

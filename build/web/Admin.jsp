@@ -61,12 +61,17 @@
                         <p>Summer Collection New Morden Design</p>
                     </section>
 
-                    <section id="cart" class="section-p1">               
+                    <section id="search-box">
                         <form class="search-container" action="MainController" method="post">
                             <input type="text" id="search-bar" placeholder="Enter email or fullname" name="txtsearch" value="${param.txtsearch}" />
-                            <input type="submit" value="searchacc" name="action" style="display: none">
-                            <a href="#"><img class="search-icon" src="http://www.endlessicons.com/wp-content/uploads/2012/12/search-icon.png" /></a>
+                            <input type="submit" value="searchacc" name="action" style="display: none">  
+                            <c:if test="${requestScope.flag != null}">
+                                <p>Not found what you looking for!</p>
+                            </c:if>
                         </form>
+                    </section>
+
+                    <section id="cart" class="section-p1">               
                         <table width="100%">
                             <thead>
                                 <tr>
@@ -120,6 +125,13 @@
             </c:choose>
 
             <style>
+                #search-box{
+                    margin-bottom: 50px;
+                }
+                #search-box p{
+                    text-align: center;
+                    color: red;
+                }
                 #cart {
                     padding-top: 0;
                 }
